@@ -8,3 +8,6 @@ bin/
 lib/
 msg_gen/
 docs/
+data/
+dvo_benchmark/output/
+
