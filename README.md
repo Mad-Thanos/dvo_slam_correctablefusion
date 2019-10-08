@@ -1,40 +1,45 @@
-# Dense Visual Odometry and SLAM (dvo_slam)
+# Dense Visual SLAM for RGB-D Cameras (dvo_slam)
 
-*NOTE: this is an alpha release APIs and parameters are going to change in near future. No support is provided at this point.*
-
-These packages provide an implementation of the rigid body motion estimation of an RGB-D camera from consecutive images.
+This repository contains a [DVO-SLAM fork](https://jsturm.de/publications/data/kerl13iros.pdf) (ROS Kinetic) with modifications for our BMVC 2017 paper "Efficient Online Surface Correction for Real-time Large-Scale 3D Reconstruction".
 
  *  **dvo_core**
-    
     Core implementation of the motion estimation algorithm. 
     
  *  **dvo_ros**
-    
     Integration of *dvo_core* with ROS.
     
  *  **dvo_slam**
-    
     Pose graph SLAM system based on *dvo_core* and integration with ROS.
     
  *  **dvo_benchmark**
-    
     Integration of *dvo_slam* with TUM RGB-D benchmark, see http://vision.in.tum.de/data/datasets/rgbd-dataset.
     
- *  **sophus**
-    
-    ROS package wrapper for Hauke Strasdat's Sophus library, see https://github.com/strasdat/Sophus.
-    
-
 ## Installation
 
-Checkout the branch for your ROS version into a folder in your `ROS_PACKAGE_PATH` and build the packages with `rosmake`.
+Setup ROS environment and create a ROS catkin workspace:
+```
+# source ROS environment
+source /opt/ros/kinetic/setup.bash
 
- *  ROS Fuerte:
-    
-    ```bash
-    git clone -b fuerte git://github.com/tum-vision/dvo_slam.git
-    rosmake dvo_core dvo_ros dvo_slam dvo_benchmark
-    ```
+# create ROS workspace folder
+mkdir ros_catkin_ws
+cd ros_catkin_ws
+
+# create catkin workspace and source setup .sh file
+catkin_make
+source devel/setup.bash
+```
+
+Checkout the DVO-SLAM source code:
+```
+cd src/
+git clone https://github.com/robmaier/dvo_slam_vhkf.git
+```
+
+```
+# build it using catkin_make
+catkin_make
+```
 
 ## Usage
 
