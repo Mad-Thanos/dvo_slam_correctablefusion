@@ -34,9 +34,10 @@ Checkout and build the DVO-SLAM source code:
 cd src/
 git clone https://github.com/robmaier/dvo_slam_vhkf.git
 
-# create TUM benchmark output directory
+# create TUM benchmark output directories
 cd dvo_slam_vhkf/dvo_benchmark
 mkdir dvo_slam_vhkf/dvo_benchmark/output/
+mkdir dvo_slam_vhkf/dvo_benchmark/output/graph/
 cd ..
 
 # build package (and workspace) using catkin_make
