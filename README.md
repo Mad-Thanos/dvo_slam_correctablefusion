@@ -1,16 +1,14 @@
 # Dense Visual SLAM for RGB-D Cameras (dvo_slam)
 
-This repository contains a [DVO-SLAM fork](https://jsturm.de/publications/data/kerl13iros.pdf) (ROS Kinetic) with modifications for our BMVC 2017 paper "Efficient Online Surface Correction for Real-time Large-Scale 3D Reconstruction".
+This repository contains a [DVO-SLAM](https://jsturm.de/publications/data/kerl13iros.pdf) fork (ROS Kinetic) with modifications for our [BMVC 2017 paper "Efficient Online Surface Correction for Real-time Large-Scale 3D Reconstruction"](http://www.rmaier.net/pub/maier2017efficient.pdf).
 
+## Packages
  *  **dvo_core**
-    Core implementation of the motion estimation algorithm. 
-    
+    Core implementation of the motion estimation algorithm.
  *  **dvo_ros**
     Integration of *dvo_core* with ROS.
-    
  *  **dvo_slam**
     Pose graph SLAM system based on *dvo_core* and integration with ROS.
-    
  *  **dvo_benchmark**
     Integration of *dvo_slam* with TUM RGB-D benchmark, see http://vision.in.tum.de/data/datasets/rgbd-dataset.
     
