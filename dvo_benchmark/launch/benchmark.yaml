@@ -12,4 +12,4 @@ lambda: 0.0
 mu: 0.05
 min_intensity_deriv: 0.0
 min_depth_deriv: 0.0
-reconstruction: true
+reconstruction: false

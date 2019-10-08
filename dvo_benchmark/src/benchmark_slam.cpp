@@ -352,6 +352,44 @@ void BenchmarkNode::createReferenceCamera(dvo::visualization::CameraTrajectoryVi
       show();
 }
 
+void mapChangedCallback(dvo_slam::KeyframeGraph& keyFrameGraph)
+{
+  static int mapChangedCounter = 0;
+  std::cout << "mapChangedCallback" << std::endl;
+
+  const dvo_slam::KeyframeVector& keyFrames = keyFrameGraph.keyframes();
+
+  std::stringstream ss;
+  ss << "graph/map" << mapChangedCounter << ".txt";
+  std::ofstream graphFile(ss.str().c_str());
+  if(!graphFile.is_open())
+  {
+    std::ostringstream oss;
+    oss << "Could not open GraphFile " << ss.str() << std::endl;
+    ROS_ERROR(oss.str().c_str());
+  }
+
+
+  for(dvo_slam::KeyframeVector::const_iterator it = keyFrames.begin(); it != keyFrames.end(); it++)
+  {
+    const dvo_slam::KeyframePtr& keyframe = *it;
+    Eigen::Affine3d& pose = keyframe->pose();
+    Eigen::Quaterniond q(pose.rotation());
+
+    graphFile << keyframe->id() << " " << std::fixed << std::setprecision(5) << keyframe->image()->timestamp() << " "
+            << pose.translation()(0) << " "
+            << pose.translation()(1) << " "
+            << pose.translation()(2) << " "
+            << q.x() << " "
+            << q.y() << " "
+            << q.z() << " "
+            << q.w() << " "
+            << std::endl;
+  }
+  graphFile.close();
+  mapChangedCounter++;
+}
+
 void BenchmarkNode::run()
 {
   // setup visualizer
@@ -359,6 +397,7 @@ void BenchmarkNode::run()
   dvo::visualization::CameraTrajectoryVisualizerInterface* visualizer;
   dvo_slam::visualization::GraphVisualizer* graph_visualizer;
 
+  std::cout << std::fixed << std::setprecision(10) << std::endl;
 
   if(cfg_.VisualizationRequired())
   {
@@ -384,13 +423,21 @@ void BenchmarkNode::run()
   // TODO: load from file
   //dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(525.0f, 525.0f, 320.0f, 240.0f);
   //fr1
-  dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(517.3, 516.5, 318.6, 255.3);
+  //dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(517.3, 516.5, 318.6, 255.3);
 
   //fr2
   //dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(520.9f, 521.0f, 325.1f, 249.7f);
 
   //fr3
-  //dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(535.4f, 539.2f, 320.1f, 247.6f);
+//  dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(535.4f, 539.2f, 320.1f, 247.6f);
+
+  //aug icl nuim
+  dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(525.0f, 525.0f, 319.5f, 239.5f);
+
+  //bundle fusion apt0
+//  dvo::core::IntrinsicMatrix intrinsics = dvo::core::IntrinsicMatrix::create(583.0f, 583.0f, 320.0f, 240.0f);
+
+  ROS_WARN_STREAM("Intrinsic: " << intrinsics.data);
 
   dvo::core::RgbdCameraPyramid camera(640, 480, intrinsics);
 
@@ -416,6 +463,8 @@ void BenchmarkNode::run()
   keyframe_tracker.configureTracking(cfg);
   keyframe_tracker.configureKeyframeSelection(frontend_cfg);
   keyframe_tracker.configureMapping(backend_cfg);
+
+  keyframe_tracker.addMapChangedCallback(mapChangedCallback);
 
   ROS_WARN_STREAM_NAMED("config", "tracker config: \"" << keyframe_tracker.trackingConfiguration() << "\"");
   ROS_WARN_STREAM_NAMED("config", "frontend config: \"" << keyframe_tracker.keyframeSelectionConfiguration() << "\"");

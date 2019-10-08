@@ -12,6 +12,9 @@ find_package(G2O REQUIRED)
 
 LIST(APPEND CMAKE_CXX_FLAGS "-std=c++11")
 
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES dvo_benchmark

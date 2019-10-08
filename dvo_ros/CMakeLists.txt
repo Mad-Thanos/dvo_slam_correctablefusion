@@ -14,6 +14,9 @@ find_package(Eigen3 REQUIRED)
 # dynamic reconfigure
 generate_dynamic_reconfigure_options(cfg/CameraDenseTracker.cfg)
 
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES dvo_ros
