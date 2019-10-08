@@ -43,6 +43,8 @@
 #include <dvo_benchmark/groundtruth.h>
 #include <dvo_benchmark/tools.h>
 
+static std::string GraphFolder;
+
 dvo::core::RgbdImagePyramidPtr load(dvo::core::RgbdCameraPyramid& camera, std::string rgb_file, std::string depth_file)
 {
   cv::Mat rgb, grey, grey_s16, depth, depth_inpainted, depth_mask, depth_mono, depth_float;
@@ -103,6 +105,7 @@ public:
     std::string VideoFolder;
 
     std::string CameraFile;
+    std::string GraphFolder;
 
     std::string RgbdPairFile;
     std::string GroundtruthFile;
@@ -214,6 +217,13 @@ bool BenchmarkNode::configure()
   }
 
   nh_private_.param("camera_file", cfg_.CameraFile, std::string(""));
+
+  if(!nh_private_.getParam("graph_folder", cfg_.GraphFolder) || cfg_.GraphFolder.empty())
+  {
+    std::cerr << "Missing 'graph_folder' parameter!" << std::endl;
+    return false;
+  }
+  GraphFolder = cfg_.GraphFolder;
 
   // ground truth related stuff
   nh_private_.param("show_groundtruth", cfg_.ShowGroundtruth, false);
@@ -360,7 +370,7 @@ void mapChangedCallback(dvo_slam::KeyframeGraph& keyFrameGraph)
   const dvo_slam::KeyframeVector& keyFrames = keyFrameGraph.keyframes();
 
   std::stringstream ss;
-  ss << "graph/map" << mapChangedCounter << ".txt";
+  ss << GraphFolder << "/map" << mapChangedCounter << ".txt";
   std::ofstream graphFile(ss.str().c_str());
   if(!graphFile.is_open())
   {
