@@ -32,12 +32,12 @@ Checkout and build the DVO-SLAM source code:
 ```
 # clone repository
 cd src/
-git clone https://github.com/robmaier/dvo_slam_vhkf.git
+git clone https://github.com/robmaier/dvo_slam_correctablefusion.git
 
 # create TUM benchmark output directories
-cd dvo_slam_vhkf/dvo_benchmark
-mkdir dvo_slam_vhkf/dvo_benchmark/output/
-mkdir dvo_slam_vhkf/dvo_benchmark/output/graph/
+cd dvo_slam_correctablefusion/dvo_benchmark
+mkdir dvo_slam_correctablefusion/dvo_benchmark/output/
+mkdir dvo_slam_correctablefusion/dvo_benchmark/output/graph/
 cd ..
 
 # build package (and workspace) using catkin_make
@@ -49,7 +49,7 @@ catkin_make
 Download one of the [TUM RGB-D Benchmark sequences](https://vision.in.tum.de/data/datasets/rgbd-dataset/download):
 ```
 # go into data folder
-cd src/dvo_slam_vhkf/data/
+cd src/dvo_slam_correctablefusion/data/
 # download dataset
 wget https://vision.in.tum.de/rgbd/dataset/freiburg3/rgbd_dataset_freiburg3_long_office_household.tgz
 # extract data
@@ -72,12 +72,12 @@ roscore
 
 Estimate camera trajectory for the downloaded RGB-D dataset:
 ```
-roslaunch dvo_benchmark benchmark.launch dataset:=$PWD/src/dvo_slam_vhkf/data/fr3_office
+roslaunch dvo_benchmark benchmark.launch dataset:=$PWD/src/dvo_slam_correctablefusion/data/fr3_office
 ```
 
 We calculate the camera tracking accuracy and plot the differences between the groundtruth trajectory and the estimated trajectory as follows:
 ```
-cd src/dvo_slam_vhkf/data/fr3_office
+cd src/dvo_slam_correctablefusion/data/fr3_office
 python ../evaluate_ate.py groundtruth.txt ../../dvo_benchmark/output/trajectory.txt --plot plot.png --verbose
 ```
 
