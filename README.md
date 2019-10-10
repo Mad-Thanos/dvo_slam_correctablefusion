@@ -1,6 +1,6 @@
 # Dense Visual SLAM for RGB-D Cameras (dvo_slam)
 
-This repository contains a [DVO-SLAM](https://jsturm.de/publications/data/kerl13iros.pdf) fork (ROS Kinetic) with modifications for our [BMVC 2017 paper "Efficient Online Surface Correction for Real-time Large-Scale 3D Reconstruction"](http://www.rmaier.net/pub/maier2017efficient.pdf).
+This repository contains a [DVO-SLAM](https://jsturm.de/publications/data/kerl13iros.pdf) fork (ROS Kinetic) with modifications for our [BMVC 2017 paper "Efficient Online Surface Correction for Real-time Large-Scale 3D Reconstruction"](http://www.rmaier.net/pub/maier2017efficient.pdf). In particular, this code also outputs the current keyframe graph to disk when the keyframe map changes.
 
 ## Packages
  *  **dvo_core**

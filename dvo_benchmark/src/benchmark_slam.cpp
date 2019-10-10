@@ -365,7 +365,7 @@ void BenchmarkNode::createReferenceCamera(dvo::visualization::CameraTrajectoryVi
 void mapChangedCallback(dvo_slam::KeyframeGraph& keyFrameGraph)
 {
   static int mapChangedCounter = 0;
-  std::cout << "mapChangedCallback" << std::endl;
+  //std::cout << "mapChangedCallback" << std::endl;
 
   const dvo_slam::KeyframeVector& keyFrames = keyFrameGraph.keyframes();
 
